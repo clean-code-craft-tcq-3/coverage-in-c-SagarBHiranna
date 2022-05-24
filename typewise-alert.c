@@ -58,12 +58,11 @@ void sendToController(BreachType breachType, void (*loggerFunPtr) (char*)) {
   char header[] = "0xfeed : ";
   char strBreach [8];
   sprintf(strBreach,"%d",breachType);
-  loggerFunPtr( strcat(header,strBreach));
+  loggerFunPtr(strcat(header,strBreach));
 }
 
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC, void (*loggerFunPtr) (char*)) {
   BreachType breachType = classifyTemperatureBreach(batteryChar.coolingType, temperatureInC);
-  printf("%d", breachType);
   switch(alertTarget) {
     case TO_CONTROLLER:
       sendToController(breachType, loggerFunPtr);
@@ -73,6 +72,3 @@ void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double
       break;
   }
 }
-
-
-
