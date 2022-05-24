@@ -43,4 +43,9 @@ TEST_CASE("Check for Display Functionality") {
   REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, 48) == TOO_HIGH);
 }
 
-
+TEST_CASE("Passive Cooling : Check and Alert Verification") {
+  BatteryCharacter batterProperty ;
+  batterProperty.coolingType = PASSIVE_COOLING;
+  checkAndAlert(TO_CONTROLLER, batterProperty, 20, displayOnConsole);
+  REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -5)==TOO_LOW);
+}
