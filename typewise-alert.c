@@ -20,15 +20,9 @@ int checkValueInUpperLimit(int value, double upperLimit)
   return ((value >= upperLimit) ? 1 : 0);
 }
 
-breachStatus initialiseSystem()
-{
-  messageMail = "";
-  breachStatus breachIndicator = {0};  
-  return breachIndicator;
-}
-
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
-  breachStatus breachIndicator = initialiseSystem();
+  messageMail = "";
+  breachStatus breachIndicator = {0};
   breachIndicator.statusLowLimit = checkValueInLowerLimit(value, lowerLimit);
   breachIndicator.statusHighLimit = checkValueInUpperLimit(value, upperLimit);
   if(breachIndicator.statusHighLimit){
@@ -49,39 +43,39 @@ BreachType classifyTemperatureBreach(CoolingType coolingtype, double temperature
   return inferBreach(temperatureInC, coolingTypes[coolingtype].lowerLimit, coolingTypes[coolingtype].higherLimit);
 }
 
-status sendToEmail(BreachType breachType, void (*loggerFunPtr) (char*)) {
+status sendToEmail(BreachType breachType) {
   char recepient[10] = "a.b@c.com";
   char to_template[10] = "To : ";
   statusInfo.statusSendToEmail = E_NOT_OK;
   if (breachType != NORMAL)
   {
-    loggerFunPtr(strcat(to_template, recepient));
-    loggerFunPtr(messageMail);
+    displayOnConsole(strcat(to_template, recepient));
+    displayOnConsole(messageMail);
     statusInfo.statusSendToEmail = E_OK;
     return E_OK;
   }
   return E_NOT_OK;
 }
 
-status sendToController(BreachType breachType, void (*loggerFunPtr) (char*)) {
+status sendToController(BreachType breachType) {
   statusInfo.statusSendToController = E_NOT_OK;
   char header[] = "0xfeed : ";
   char strBreach [8];
   sprintf(strBreach,"%d",breachType);
-  loggerFunPtr(strcat(header,strBreach));
+  displayOnConsole(strcat(header,strBreach));
   statusInfo.statusSendToController = E_OK;
   return E_OK;
 }
 
-void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC, void (*loggerFunPtr) (char*)) {
+void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
   BreachType breachType = classifyTemperatureBreach(batteryChar.coolingType, temperatureInC);
   statusLog statusInfo;
   switch(alertTarget) {
     case TO_CONTROLLER:
-      sendToController(breachType, loggerFunPtr);
+      sendToController(breachType);
       break;
     case TO_EMAIL:
-      sendToEmail(breachType, loggerFunPtr);
+      sendToEmail(breachType);
       break;
   }
 }
