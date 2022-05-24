@@ -55,12 +55,6 @@ TEST_CASE("Test to check controller informing functionality") {
   REQUIRE(sendToController(TOO_HIGH)==E_OK);
 }
 
-TEST_CASE("Test to check email notification functionality") {
-  REQUIRE(sendToEmail(NORMAL)==E_NOT_OK);
-  REQUIRE(sendToEmail(TOO_LOW)==E_OK);
-  REQUIRE(sendToEmail(TOO_HIGH)==E_OK);
-}
-
 TEST_CASE("Check for Display Functionality") {
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 0) == TOO_LOW);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -1) == TOO_LOW);
