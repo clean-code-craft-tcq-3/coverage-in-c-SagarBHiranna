@@ -7,6 +7,7 @@ void displayOnConsole(char message[100])
 {
   printf("%s\n", message);
 }
+
 int checkValueInLowerLimit(int value, double lowerLimit)
 {
   return ((value < lowerLimit) ? 1 : 0);
@@ -27,6 +28,7 @@ void initialiseSystem()
   mesageMail = "";
   breachStatus breachIndicator = {0};  
 }
+
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   mesageMail = "";
   breachStatus breachIndicator = {0};
