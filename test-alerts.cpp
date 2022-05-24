@@ -25,6 +25,14 @@ TEST_CASE("Check for lower limit check functionality") {
   REQUIRE(checkValueInLowerLimit(-102,-100) == 1);
 }
 
+
+TEST_CASE("Check the functionality of mail notification")
+{
+  REQUIRE(sendToEmail(NORMAL)==E_NOT_OK);
+  REQUIRE(sendToEmail(TOO_HIGH)==E_OK);
+  REQUIRE(sendToEmail(TOO_LOW)==E_OK);
+}
+
 TEST_CASE("Cooling Properties : Check and Alert TestCases") {
   BatteryCharacter batteryProp1 = {PASSIVE_COOLING, "ABCD"};
   BatteryCharacter batteryProp2 = {HI_ACTIVE_COOLING, "BCDE"};
