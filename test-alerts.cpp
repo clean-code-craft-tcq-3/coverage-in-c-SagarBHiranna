@@ -43,6 +43,15 @@ TEST_CASE("Check for Display Functionality") {
   REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, 48) == TOO_HIGH);
 }
 
+TEST_CASE("infers the breach according to limits") {
+  REQUIRE(inferBreach(-12, 0, 35) == TOO_LOW);
+  REQUIRE(inferBreach(101,100,105) == NORMAL);
+  REQUIRE(inferBreach(25,20,30)==NORMAL);
+  REQUIRE(inferBreach(0, 0, 35) == TOO_LOW);
+  REQUIRE(inferBreach(105,100,105) == TOO_HIGH);
+  REQUIRE(inferBreach(120,100,105) == TOO_HIGH);
+}
+
 TEST_CASE("Check the value and alert for Passive Cooling") {
 	BatteryCharacter batteryCharacter;
 	batteryCharacter.coolingType = PASSIVE_COOLING;
