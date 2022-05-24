@@ -42,6 +42,8 @@ typedef struct
   status statusSendToController;
 }statusLog;
 
+statusLog statusInfo;
+
 typedef enum {
   TO_CONTROLLER,
   TO_EMAIL
