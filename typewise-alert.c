@@ -58,8 +58,9 @@ status sendToEmail(BreachType breachType, void (*loggerFunPtr) (char*)) {
     loggerFunPtr(strcat(to_template, recepient));
     loggerFunPtr(messageMail);
     statusInfo.statusSendToEmail = E_OK;
+    return E_OK;
   }
-  return statusInfo.statusSendToEmail;
+  return E_NOT_OK;
 }
 
 status sendToController(BreachType breachType, void (*loggerFunPtr) (char*)) {
@@ -69,7 +70,7 @@ status sendToController(BreachType breachType, void (*loggerFunPtr) (char*)) {
   sprintf(strBreach,"%d",breachType);
   loggerFunPtr(strcat(header,strBreach));
   statusInfo.statusSendToController = E_OK;
-  return statusInfo.statusSendToController;
+  return E_OK;
 }
 
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC, void (*loggerFunPtr) (char*)) {
