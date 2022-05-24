@@ -8,7 +8,9 @@ TEST_CASE("infers the breach according to limits") {
   REQUIRE(inferBreach(101,100,105) == NORMAL);
   REQUIRE(inferBreach(25,20,30)==NORMAL);
   REQUIRE(inferBreach(0, 0, 35) == NORMAL);
-  REQUIRE(inferBreach(105,100,105) == TOO_HIGH);
+  REQUIRE(inferBreach(105,100,105) == NORMAL);
+  REQUIRE(inferBreach(98,100,105) == TOO_LOW);
+  REQUIRE(inferBreach(190,100,105) == TOO_HIGH);
 }
 
 TEST_CASE("Check for Upper limit check functionality") {
