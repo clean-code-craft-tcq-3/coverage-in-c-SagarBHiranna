@@ -68,9 +68,3 @@ TEST_CASE(" Cooling Properties: Check and Alert Verification") {
 	REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, 90) == TOO_HIGH);
 }
 
-TEST_CASE("Check for Mail sending functionality") {
-  REQUIRE(sendToEmail(NORMAL, displayOnConsole)==E_NOT_OK);
-  REQUIRE(sendToEmail(TOO_LOW, displayOnConsole)==E_OK);
-  REQUIRE(sendToEmail(TOO_HIGH, displayOnConsole)==E_OK);
-}
-
