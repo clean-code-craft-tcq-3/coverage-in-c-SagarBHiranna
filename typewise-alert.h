@@ -31,9 +31,8 @@ typedef struct
   double higherLimit ;
 } coolingTypeProperties;
 
-coolingTypeProperties coolingTypes[] = {{PASSIVE_COOLING, 0, 35}, {HI_ACTIVE_COOLING, 0, 45}, {MED_ACTIVE_COOLING, 0, 45},}; 
+ 
 
-char* messageMail = "";
 typedef enum {
   TO_CONTROLLER,
   TO_EMAIL
@@ -49,7 +48,7 @@ typedef struct
   char mailAlertMessage[100];
 }mailAlert;
 
-mailAlert mailInfo [] = {{"Hi, the temperature is too low\n"},{"Hi, the temperature is too high\n"}};
+
 
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC, void (*loggerFunPtr) (char*));
 BreachType classifyTemperatureBreach(CoolingType coolingtype, double temperatureInC);
