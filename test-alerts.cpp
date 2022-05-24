@@ -25,6 +25,12 @@ TEST_CASE("Check for lower limit check functionality") {
   REQUIRE(checkValueInLowerLimit(-102,-100) == 1);
 }
 
+TEST_CASE("ABCD") {
+  BatteryCharacter batteryProp = {PASSIVE_COOLING, "ABCD"};
+  checkAndAlert(TO_CONTROLLER, batteryProp, 20.0);
+  REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 20)==NORMAL);
+}
+
 TEST_CASE("Check for Display Functionality") {
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 0) == TOO_LOW);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -1) == TOO_LOW);
@@ -43,26 +49,3 @@ TEST_CASE("Check for Display Functionality") {
   REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, 48) == TOO_HIGH);
 }
 
-TEST_CASE(" Cooling Properties: Check and Alert Verification") {
-  BatteryCharacter batterProperties1 = {PASSIVE_COOLING, "ABCD"};
-  checkAndAlert(TO_CONTROLLER, batterProperties1, 20);
-  REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -5)==TOO_LOW);
-	checkAndAlert(TO_EMAIL, batterProperties1, -5);
-	REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -5) == TOO_LOW);
-	checkAndAlert(TO_CONTROLLER, batterProperties1, 70);
-	REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 70) == TOO_HIGH);
-	BatteryCharacter batterProperties2 = {HI_ACTIVE_COOLING, "ABCD"};
-	checkAndAlert(TO_EMAIL, batterProperties2, 22);
-	REQUIRE(classifyTemperatureBreach(HI_ACTIVE_COOLING, 22) == NORMAL);
-	checkAndAlert(TO_EMAIL, batterProperties2, -6);
-	REQUIRE(classifyTemperatureBreach(HI_ACTIVE_COOLING, -6) == TOO_LOW);
-	checkAndAlert(TO_CONTROLLER, batterProperties2, 80);
-	REQUIRE(classifyTemperatureBreach(HI_ACTIVE_COOLING, 80) == TOO_HIGH);
-  BatteryCharacter batterProperties3 = {MED_ACTIVE_COOLING, "ABCD"};
-	checkAndAlert(TO_CONTROLLER, batterProperties3, 21);
-	REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, 21) == NORMAL);
-	checkAndAlert(TO_CONTROLLER, batterProperties3, -9);
-	REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, -9) == TOO_LOW);
-	checkAndAlert(TO_EMAIL, batterProperties3, 90);
-	REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, 90) == TOO_HIGH);
-}
