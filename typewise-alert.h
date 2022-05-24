@@ -31,7 +31,16 @@ typedef struct
   double higherLimit ;
 } coolingTypeProperties;
 
- 
+ typedef enum{
+  E_OK,
+  E_NOT_OK
+}status;
+
+typedef struct 
+{
+  status statusSendToEmail;
+  status statusSendToController;
+}statusLog;
 
 typedef enum {
   TO_CONTROLLER,
