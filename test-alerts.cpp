@@ -43,9 +43,34 @@ TEST_CASE("Check for Display Functionality") {
   REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, 48) == TOO_HIGH);
 }
 
-TEST_CASE("Passive Cooling : Check and Alert Verification") {
-  BatteryCharacter batterProperty ;
-  batterProperty.coolingType = PASSIVE_COOLING;
-  checkAndAlert(TO_CONTROLLER, batterProperty, 20, displayOnConsole);
+TEST_CASE(" Cooling Properties: Check and Alert Verification") {
+  BatteryCharacter batterProperties ;
+  batterProperties.coolingType = PASSIVE_COOLING;
+  checkAndAlert(TO_CONTROLLER, batterProperties, 20, displayOnConsole);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -5)==TOO_LOW);
+	checkAndAlert(TO_EMAIL, batterProperties, -5, displayOnConsole);
+	REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -5) == TOO_LOW);
+	checkAndAlert(TO_CONTROLLER, batterProperties, 70, displayOnConsole);
+	REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 70) == TOO_HIGH);
+	batterProperties.coolingType = HI_ACTIVE_COOLING;
+	checkAndAlert(TO_EMAIL, batterProperties, 22, displayOnConsole);
+	REQUIRE(classifyTemperatureBreach(HI_ACTIVE_COOLING, 22) == NORMAL);
+	checkAndAlert(TO_EMAIL, batterProperties, -6, displayOnConsole);
+	REQUIRE(classifyTemperatureBreach(HI_ACTIVE_COOLING, -6) == TOO_LOW);
+	checkAndAlert(TO_CONTROLLER, batterProperties, 80, displayOnConsole);
+	REQUIRE(classifyTemperatureBreach(HI_ACTIVE_COOLING, 80) == TOO_HIGH);
+  batterProperties.coolingType = MED_ACTIVE_COOLING;
+	checkAndAlert(TO_CONTROLLER, batterProperties, 21, displayOnConsole);
+	REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, 21) == NORMAL);
+	checkAndAlert(TO_CONTROLLER, batterProperties, -9, displayOnConsole);
+	REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, -9) == TOO_LOW);
+	checkAndAlert(TO_EMAIL, batterProperties, 90, displayOnConsole);
+	REQUIRE(classifyTemperatureBreach(MED_ACTIVE_COOLING, 90) == TOO_HIGH);
 }
+
+TEST_CASE("Check for Mail sending functionality") {
+  REQUIRE(sendToEmail(NORMAL, displayOnConsole)==E_NOT_OK);
+  REQUIRE(sendToEmail(TOO_LOW, displayOnConsole)==E_OK);
+  REQUIRE(sendToEmail(TOO_HIGH, displayOnConsole)==E_OK);
+}
+
