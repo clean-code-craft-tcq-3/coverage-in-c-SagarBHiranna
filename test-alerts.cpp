@@ -29,30 +29,30 @@ TEST_CASE("Cooling Properties : Check and Alert TestCases") {
   BatteryCharacter batteryProp1 = {PASSIVE_COOLING, "ABCD"};
   BatteryCharacter batteryProp2 = {HI_ACTIVE_COOLING, "BCDE"};
   BatteryCharacter batteryProp3 = {MED_ACTIVE_COOLING, "PQRS"};
-  checkAndAlert(TO_CONTROLLER, batteryProp1, 20.0, displayOnConsole);
+  checkAndAlert(TO_CONTROLLER, batteryProp1, 20.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 20.0)==NORMAL);
-  checkAndAlert(TO_EMAIL, batteryProp1, -5.0, displayOnConsole);
+  checkAndAlert(TO_CONTROLLER, batteryProp1, -5.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -5.0)==TOO_LOW);
-  checkAndAlert(TO_CONTROLLER, batteryProp1, 70.0, displayOnConsole);
+  checkAndAlert(TO_CONTROLLER, batteryProp1, 70.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 70.0)==TOO_HIGH);
-  checkAndAlert(TO_CONTROLLER, batteryProp2, 22.0, displayOnConsole);
+  checkAndAlert(TO_CONTROLLER, batteryProp2, 22.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 22.0)==NORMAL);
-  checkAndAlert(TO_EMAIL, batteryProp2, -6.0, displayOnConsole);
+  checkAndAlert(TO_CONTROLLER, batteryProp2, -6.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -6.0)==TOO_LOW);
-  checkAndAlert(TO_CONTROLLER, batteryProp2, 80.0, displayOnConsole);
+  checkAndAlert(TO_CONTROLLER, batteryProp2, 80.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 80.0)==TOO_HIGH);
-  checkAndAlert(TO_CONTROLLER, batteryProp3, 20.0, displayOnConsole);
+  checkAndAlert(TO_CONTROLLER, batteryProp3, 20.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 20.0)==NORMAL);
-  checkAndAlert(TO_CONTROLLER, batteryProp3, -9.0, displayOnConsole);
+  checkAndAlert(TO_CONTROLLER, batteryProp3, -9.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -9.0)==TOO_LOW);
-  checkAndAlert(TO_EMAIL, batteryProp3, 90.0, displayOnConsole);
+  checkAndAlert(TO_CONTROLLER, batteryProp3, 90.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 90)==TOO_HIGH);
 }
 
 TEST_CASE("Test to check controller informing functionality") {
-  REQUIRE(sendToController(NORMAL, displayOnConsole)==E_OK);
-  REQUIRE(sendToController(TOO_LOW, displayOnConsole)==E_OK);
-  REQUIRE(sendToController(TOO_HIGH, displayOnConsole)==E_OK);
+  REQUIRE(sendToController(NORMAL)==E_OK);
+  REQUIRE(sendToController(TOO_LOW)==E_OK);
+  REQUIRE(sendToController(TOO_HIGH)==E_OK);
 }
 
 TEST_CASE("Check for Display Functionality") {

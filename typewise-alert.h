@@ -59,12 +59,12 @@ typedef struct
 
 
 
-void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC, void (*loggerFunPtr) (char*));
+void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
 BreachType classifyTemperatureBreach(CoolingType coolingtype, double temperatureInC);
-status sendToController(BreachType breachType, void (*loggerFunPtr) (char*));
-status sendToEmail(BreachType breachType, void (*loggerFunPtr) (char*));
+status sendToController(BreachType breachType);
+status sendToEmail(BreachType breachType);
 BreachType inferBreach(double value, double lowerLimit, double upperLimit);
-breachStatus initialiseSystem();
+
 int checkValueInUpperLimit(int value, double upperLimit);
 int checkValueInLowerLimit(int value, double lowerLimit);
 void displayOnConsole(char message[100]);
