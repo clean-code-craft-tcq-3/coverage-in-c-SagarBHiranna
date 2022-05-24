@@ -55,12 +55,12 @@ TEST_CASE("infers the breach according to limits") {
 TEST_CASE("Check the value and alert for Passive Cooling") {
 	BatteryCharacter batteryCharacter;
 	batteryCharacter.coolingType = PASSIVE_COOLING;
-	checkAndAlert(TO_CONTROLLER, batteryCharacter, 15, print);
+	checkAndAlert(TO_CONTROLLER, batteryCharacter, 15, printf);
 	REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 15) == NORMAL);
 
-	checkAndAlert(TO_EMAIL, batteryCharacter, -10, fakePrint);
+	checkAndAlert(TO_EMAIL, batteryCharacter, -10, printf);
 	REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -10) == TOO_LOW);
 
-	checkAndAlert(TO_CONTROLLER, batteryCharacter, 40, print);
+	checkAndAlert(TO_CONTROLLER, batteryCharacter, 40, printf);
 	REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 40) == TOO_HIGH);
 }
