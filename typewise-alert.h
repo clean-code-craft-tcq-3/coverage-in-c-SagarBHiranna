@@ -31,7 +31,7 @@ typedef struct
   double higherLimit ;
 } coolingTypeProperties;
 
- typedef enum{
+typedef enum{
   E_OK,
   E_NOT_OK
 }status;
@@ -42,7 +42,6 @@ typedef struct
   status statusSendToController;
 }statusLog;
 
-statusLog statusInfo;
 
 typedef enum {
   TO_CONTROLLER,
@@ -63,8 +62,8 @@ typedef struct
 
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC, void (*loggerFunPtr) (char*));
 BreachType classifyTemperatureBreach(CoolingType coolingtype, double temperatureInC);
-void sendToController(BreachType breachType, void (*loggerFunPtr) (char*));
-void sendToEmail(BreachType breachType, void (*loggerFunPtr) (char*));
+status sendToController(BreachType breachType, void (*loggerFunPtr) (char*));
+status sendToEmail(BreachType breachType, void (*loggerFunPtr) (char*));
 BreachType inferBreach(double value, double lowerLimit, double upperLimit);
 breachStatus initialiseSystem();
 int checkValueInUpperLimit(int value, double upperLimit);

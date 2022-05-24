@@ -44,24 +44,15 @@ TEST_CASE("Check for Display Functionality") {
 }
 
 TEST_CASE("Check for Mail sending functionality") {
-  REQUIRE_NOTHROW(sendToEmail(NORMAL, displayOnConsole));
-  CHECK(statusInfo.statusSendToEmail == E_OK);
-  REQUIRE_NOTHROW(sendToEmail(TOO_LOW, displayOnConsole));
-  CHECK(statusInfo.statusSendToEmail == E_OK);
-  REQUIRE_NOTHROW(sendToEmail(TOO_HIGH, displayOnConsole));
-  CHECK(statusInfo.statusSendToEmail == E_OK);
+  statusLog statusInfo ;
+  REQUIRE(sendToEmail(NORMAL, displayOnConsole)==E_NOT_OK);
+  REQUIRE(sendToEmail(TOO_LOW, displayOnConsole)==E_OK);
+  REQUIRE(sendToEmail(TOO_HIGH, displayOnConsole)==E_OK);
 }
 
 TEST_CASE("Check for controller informing functionality") {
-  REQUIRE_NOTHROW(sendToController(NORMAL, displayOnConsole));
-  CHECK(statusInfo.statusSendToController == E_OK);
-  REQUIRE_NOTHROW(sendToController(TOO_LOW, displayOnConsole));
-  CHECK(statusInfo.statusSendToController == E_OK);
-  REQUIRE_NOTHROW(sendToController(TOO_HIGH, displayOnConsole));
-  CHECK(statusInfo.statusSendToController == E_OK);
+  REQUIRE(sendToController(NORMAL, displayOnConsole)==E_NOT_OK);
+  REQUIRE(sendToController(TOO_LOW, displayOnConsole)==E_OK);
+  REQUIRE(sendToController(TOO_HIGH, displayOnConsole)==E_OK);
 }
 
-TEST_CASE("Check for displayOnConsole Functionality") {
-  REQUIRE_NOTHROW(displayOnConsole("Hello There !!"));
-
-}
