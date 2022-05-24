@@ -44,14 +44,14 @@ TEST_CASE("Check for Display Functionality") {
 }
 
 TEST_CASE("Check for Mail sending functionality") {
-  REQUIRE(sendToEmail(NORMAL, displayOnConsole)==E_NOT_OK);
-  REQUIRE(sendToEmail(TOO_LOW, displayOnConsole)==E_OK);
-  REQUIRE(sendToEmail(TOO_HIGH, displayOnConsole)==E_OK);
+  REQUIRE(sendToEmail(NORMAL, displayOnConsole)==1);
+  REQUIRE(sendToEmail(TOO_LOW, displayOnConsole)==0);
+  REQUIRE(sendToEmail(TOO_HIGH, displayOnConsole)==0);
 }
 
 TEST_CASE("Check for controller informing functionality") {
-  REQUIRE(sendToController(NORMAL, displayOnConsole)==E_NOT_OK);
-  REQUIRE(sendToController(TOO_LOW, displayOnConsole)==E_OK);
-  REQUIRE(sendToController(TOO_HIGH, displayOnConsole)==E_OK);
+  REQUIRE(sendToController(NORMAL, displayOnConsole)==1);
+  REQUIRE(sendToController(TOO_LOW, displayOnConsole)==0);
+  REQUIRE(sendToController(TOO_HIGH, displayOnConsole)==0);
 }
 
