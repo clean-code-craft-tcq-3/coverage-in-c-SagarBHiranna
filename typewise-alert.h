@@ -1,5 +1,4 @@
-#ifndef TYPEWISE-ALERT_H
-#define TYPEWISE-ALERT_H
+#pragma once
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -69,5 +68,3 @@ breachStatus initialiseSystem();
 int checkValueInUpperLimit(int value, double upperLimit);
 int checkValueInLowerLimit(int value, double lowerLimit);
 void displayOnConsole(char message[100]);
-
-#endif
