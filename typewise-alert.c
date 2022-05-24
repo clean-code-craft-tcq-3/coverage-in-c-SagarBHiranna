@@ -16,7 +16,7 @@ int checkValueInLowerLimit(int value, double lowerLimit)
 
 int checkValueInUpperLimit(int value, double upperLimit)
 {
-  return ((value > upperLimit) ? 2 : 0);
+  return ((value > upperLimit) ? 1 : 0);
 }
 
 breachStatus initialiseSystem()
