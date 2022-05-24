@@ -25,7 +25,7 @@ TEST_CASE("Check for lower limit check functionality") {
   REQUIRE(checkValueInLowerLimit(-102,-100) == 1);
 }
 
-TEST_CASE("ABCD") {
+TEST_CASE("Cooling Properties : Check and Alert TestCases") {
   BatteryCharacter batteryProp1 = {PASSIVE_COOLING, "ABCD"};
   BatteryCharacter batteryProp2 = {HI_ACTIVE_COOLING, "BCDE"};
   BatteryCharacter batteryProp3 = {MED_ACTIVE_COOLING, "PQRS"};
@@ -47,6 +47,12 @@ TEST_CASE("ABCD") {
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, -9.0)==TOO_LOW);
   checkAndAlert(TO_CONTROLLER, batteryProp3, 90.0);
   REQUIRE(classifyTemperatureBreach(PASSIVE_COOLING, 90)==TOO_HIGH);
+}
+
+TEST_CASE("Test to check controller informing functionality") {
+  REQUIRE(sendToController(NORMAL)==E_OK);
+  REQUIRE(sendToController(TOO_LOW)==E_OK);
+  REQUIRE(sendToController(TOO_HIGH)==E_OK);
 }
 
 TEST_CASE("Check for Display Functionality") {
