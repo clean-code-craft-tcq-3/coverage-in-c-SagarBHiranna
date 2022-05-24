@@ -45,14 +45,16 @@ BreachType classifyTemperatureBreach(CoolingType coolingtype, double temperature
 }
 
 status sendToEmail(BreachType breachType) {
-  char recepient[10] = "a.b@c.com";
-  char to_template[10] = "To : ";
+  char recepient[100] = "a.b@c.com";
+  char to_template[100] = "To : ";
   statusInfo.statusSendToEmail = E_NOT_OK;
   if (breachType != NORMAL)
   {
-    displayOnConsole(strcat(to_template, recepient));
+    displayOnConsole(to_template);
+    displayOnConsole(recepient);
     displayOnConsole(messageMail);
     statusInfo.statusSendToEmail = E_OK;
+    printf("am here");
     return E_OK;
   }
   return E_NOT_OK;
@@ -80,4 +82,3 @@ void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double
       break;
   }
 }
-
