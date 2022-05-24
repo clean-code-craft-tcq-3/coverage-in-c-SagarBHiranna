@@ -1,15 +1,20 @@
-#pragma once
+#ifndef TYPEWISE-ALERT_H
+#define TYPEWISE-ALERT_H
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 
 typedef enum {
-  PASSIVE_COOLING = 0,
-  HI_ACTIVE_COOLING = 1,
-  MED_ACTIVE_COOLING = 2
+  PASSIVE_COOLING,
+  HI_ACTIVE_COOLING,
+  MED_ACTIVE_COOLING
 } CoolingType;
 
 typedef enum {
-  NORMAL = 3,
-  TOO_LOW = 1,
-  TOO_HIGH = 2
+  NORMAL,
+  TOO_LOW,
+  TOO_HIGH
 } BreachType;
 
 typedef struct
@@ -26,18 +31,9 @@ typedef struct
   double higherLimit ;
 } coolingTypeProperties;
 
-
-coolingTypeProperties passiveCooling = {PASSIVE_COOLING, 0, 35};
-coolingTypeProperties highActiveCooling = {HI_ACTIVE_COOLING, 0, 45};
-coolingTypeProperties midActiveCooling = {MED_ACTIVE_COOLING, 0, 45};
-
 coolingTypeProperties coolingTypes[] = {{PASSIVE_COOLING, 0, 35}, {HI_ACTIVE_COOLING, 0, 45}, {MED_ACTIVE_COOLING, 0, 45},}; 
 
-BreachType inferBreach(double value, double lowerLimit, double upperLimit);
-
-BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
-
-char* mesageMail = "";
+char* messageMail = "";
 typedef enum {
   TO_CONTROLLER,
   TO_EMAIL
@@ -56,6 +52,13 @@ typedef struct
 mailAlert mailInfo [] = {{"Hi, the temperature is too low\n"},{"Hi, the temperature is too high\n"}};
 
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC, void (*loggerFunPtr) (char*));
+BreachType classifyTemperatureBreach(CoolingType coolingtype, double temperatureInC);
+void sendToController(BreachType breachType, void (*loggerFunPtr) (char*));
+void sendToEmail(BreachType breachType, void (*loggerFunPtr) (char*));
+BreachType inferBreach(double value, double lowerLimit, double upperLimit);
+breachStatus initialiseSystem();
+int checkValueInUpperLimit(int value, double upperLimit);
+int checkValueInLowerLimit(int value, double lowerLimit);
+void displayOnConsole(char message[100]);
 
-void sendToController(BreachType breachType, void (*displayFunPtr) (char*));
-void sendToEmail(BreachType breachType, void (*displayFunPtr) (char*));
+#endif

@@ -1,7 +1,4 @@
 #include "typewise-alert.h"
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
 
 void displayOnConsole(char message[100])
 {
@@ -18,29 +15,28 @@ int checkValueInUpperLimit(int value, double upperLimit)
   return ((value > upperLimit) ? 2 : 0);
 }
 
-void updateMailMessage(int msgIndex)
+breachStatus initialiseSystem()
 {
-  mesageMail = mailInfo[msgIndex-1].mailAlertMessage;
-}
-
-void initialiseSystem()
-{
-  mesageMail = "";
+  messageMail = "";
   breachStatus breachIndicator = {0};  
+  return breachIndicator;
 }
 
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
-  mesageMail = "";
-  breachStatus breachIndicator = {0};
-  printf("%f, %f, %f\n", value, lowerLimit, upperLimit);
+  breachStatus breachIndicator = initialiseSystem();
   breachIndicator.statusLowLimit = checkValueInLowerLimit(value, lowerLimit);
   breachIndicator.statusHighLimit = checkValueInUpperLimit(value, upperLimit);
-  if (breachIndicator.statusHighLimit + breachIndicator.statusLowLimit == 0)
-  {
-    breachIndicator.statusNormal = 3;
+  if(breachIndicator.statusHighLimit){
+    messageMail = mailInfo[1].mailAlertMessage;
+    return TOO_HIGH;
   }
-  updateMailMessage(breachIndicator.statusHighLimit+breachIndicator.statusLowLimit+breachIndicator.statusNormal);
-  return (breachIndicator.statusHighLimit+breachIndicator.statusLowLimit+breachIndicator.statusNormal);
+  if (breachIndicator.statusLowLimit)
+  {
+    messageMail = mailInfo[0].mailAlertMessage;
+    return TOO_LOW;
+  }
+  breachIndicator.statusNormal = 3;
+  return NORMAL;
 }
 
 BreachType classifyTemperatureBreach(CoolingType coolingtype, double temperatureInC)
@@ -54,7 +50,7 @@ void sendToEmail(BreachType breachType, void (*loggerFunPtr) (char*)) {
   if (breachType != NORMAL)
   {
     loggerFunPtr(strcat(to_template, recepient));
-    loggerFunPtr(mesageMail);
+    loggerFunPtr(messageMail);
   }
 }
 
@@ -67,6 +63,7 @@ void sendToController(BreachType breachType, void (*loggerFunPtr) (char*)) {
 
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC, void (*loggerFunPtr) (char*)) {
   BreachType breachType = classifyTemperatureBreach(batteryChar.coolingType, temperatureInC);
+  printf("%d", breachType);
   switch(alertTarget) {
     case TO_CONTROLLER:
       sendToController(breachType, loggerFunPtr);
@@ -77,11 +74,5 @@ void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double
   }
 }
 
-int main ()
-{
-  printf("\n**************************\n");
-  BatteryCharacter batteryCharacter;
-	batteryCharacter.coolingType = PASSIVE_COOLING;
-  checkAndAlert(TO_EMAIL, batteryCharacter, 38, displayOnConsole);
-  return 0;
-}
+
+
