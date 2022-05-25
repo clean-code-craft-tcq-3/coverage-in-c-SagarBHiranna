@@ -54,7 +54,6 @@ status sendToEmail(BreachType breachType) {
     displayOnConsole(recepient);
     displayOnConsole(messageMail);
     statusInfo.statusSendToEmail = E_OK;
-    printf("am here");
     return E_OK;
   }
   return E_NOT_OK;
@@ -80,5 +79,7 @@ void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double
     case TO_EMAIL:
       sendToEmail(breachType);
       break;
+    default :
+      displayOnConsole("Invalid Inputs");
   }
 }
