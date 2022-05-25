@@ -79,7 +79,5 @@ void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double
     case TO_EMAIL:
       sendToEmail(breachType);
       break;
-    default :
-      displayOnConsole("Invalid Inputs");
   }
 }
